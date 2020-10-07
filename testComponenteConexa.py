@@ -16,6 +16,11 @@ def run():
     testUtils.test("Componente conexa empezando de 7: [7, 8]", componenteConexa(G, 7), [7, 8])
     testUtils.test("Componente conexa empezando de 8: [8, 7]", componenteConexa(G, 8), [8, 7])
 
+    testUtils.test("Componentes conexas de G: [[0, 1, 2, 3, 4, 6, 5], [7, 8]]", componentesConexas(G), [[0, 1, 2, 3, 4, 6, 5], [7, 8]])
+    globals.initialize()
+    G3 = cargarGrafo('archivos/test3.txt', True)
+    testUtils.test("Componentes conexas de G3: [[0, 1, 2, 3, 4, 5, 6, 7], [8, 9], [10, 11, 12]]", componentesConexas(G3), [[0, 1, 2, 3, 4, 5, 6, 7], [8, 9], [10, 11, 12]])
+
 run()
 
 

@@ -15,7 +15,7 @@ print(bfs(G, 0, 6))
 print(bfs(G, 0, 7))
 print(bfs(G, 0, 8))
 
-print(ordenTopologico(G))
+print("ordenTopologico: ", ordenTopologico(G))
 
 globals.initialize()
 print(ordenTopologico(cargarGrafo('archivos/test2.txt', True)))
@@ -31,3 +31,12 @@ print(componenteConexa(G,5))
 print(componenteConexa(G,6))
 print(componenteConexa(G,7))
 print(componenteConexa(G,8))
+
+globals.initialize()
+G3 = cargarGrafo('archivos/test3.txt', False)
+print(G3)
+print("componenteConexa: ", componenteConexa(G3, 0))
+print("componenteConexa: ", componenteConexa(G3, 8))
+print("componenteConexa: ", componenteConexa(G3, 10))
+
+print("componentesConexas", componentesConexas(G3))

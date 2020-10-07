@@ -105,6 +105,16 @@ def componenteConexa(G, s):
         G.iterarSobreNodos(componenteConexaFuncion, {"G": G, "R": R, "niveles": niveles})
     return R
 
+def componentesConexasFuncion(nodo, args):
+    if not nodoEnAlgunNivel(nodo, args["componentesConexas"]):
+        args["componentesConexas"].append(componenteConexa(args["G"], nodo))
+    return args
+    
+def componentesConexas(G):
+    componentesConexas = [componenteConexa(G, 0)]
+    G.iterarSobreNodos(componentesConexasFuncion, {"G": G, "componentesConexas": componentesConexas})
+    return componentesConexas
+    
 def gradoEntradas(gradoEntradas, valor):
     gradosEntradaValor = []
     for index in range(len(gradoEntradas)):
