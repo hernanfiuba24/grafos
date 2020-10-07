@@ -21,3 +21,13 @@ globals.initialize()
 print(ordenTopologico(cargarGrafo('archivos/test2.txt', True)))
 
 print(bfs2(G, 0))
+
+print(componenteConexa(G,0))
+print(componenteConexa(G,1))
+print(componenteConexa(G,2))
+print(componenteConexa(G,3))
+print(componenteConexa(G,4))
+print(componenteConexa(G,5))
+print(componenteConexa(G,6))
+print(componenteConexa(G,7))
+print(componenteConexa(G,8))

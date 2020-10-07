@@ -76,6 +76,35 @@ def bfs2(G, s):
         nivelAnterior = args["nuevoNivel"]
     return niveles
 
+def nodoEnAlgunNivel(nodo, niveles):
+    return len(list(filter(lambda x: nodo in x, niveles))) != 0
+
+def componenteConexaFuncion2(nodoAdyacente, args):
+    if not nodoAdyacente in args["R"] and not nodoAdyacente in args["R"]:
+        args["R"].append(nodoAdyacente)
+    return args
+
+def componenteConexaFuncion3(nodoAdyacente, args):
+    if nodoAdyacente in args["args"]["R"] and not args["nodoNoEnR"] in args["args"]["R"]:
+        args["args"]["R"].append(args["nodoNoEnR"])
+    return args
+
+def componenteConexaFuncion(nodo, args):
+    if nodo in args["R"]:
+        args["G"].iterarSobreAdyacentesA(nodo, componenteConexaFuncion2, args)
+    else:
+        args["G"].iterarSobreAdyacentesA(nodo, componenteConexaFuncion3, {"args": args, "nodoNoEnR": nodo})
+    return args
+
+def componenteConexa(G, s):
+    niveles = bfs2(G, s)
+    R = [s]
+    tamanioAnterior = 0
+    while tamanioAnterior != len(R):
+        tamanioAnterior = len(R)
+        G.iterarSobreNodos(componenteConexaFuncion, {"G": G, "R": R, "niveles": niveles})
+    return R
+
 def gradoEntradas(gradoEntradas, valor):
     gradosEntradaValor = []
     for index in range(len(gradoEntradas)):
