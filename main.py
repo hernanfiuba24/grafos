@@ -19,3 +19,5 @@ print(ordenTopologico(G))
 
 globals.initialize()
 print(ordenTopologico(cargarGrafo('archivos/test2.txt', True)))
+
+print(bfs2(G, 0))

@@ -56,6 +56,26 @@ def bfs(G, s, t):
         nivelAnterior = args["nuevoNivel"]
     return (False, None)
 
+def visitados2BFS(nodo, args):
+    if (not args["visitados"][nodo]):
+        args["visitados"][nodo] = True
+        args["posiciones"].append(nodo)
+        args["nuevoNivel"].append(nodo)
+    return args
+
+def bfs2(G, s):
+    visitados = [False for i in range(G.cantidadNodos())]
+    posiciones = [s]
+    niveles = []
+    nivelAnterior = [s]
+    while (len(nivelAnterior) != 0):
+        niveles.append(nivelAnterior)
+        nuevoNivel = []
+        for v in nivelAnterior:
+            args = G.iterarSobreAdyacentesA(v, visitados2BFS, {"G": G, "visitados": visitados, "posiciones": posiciones, "nuevoNivel": nuevoNivel})
+        nivelAnterior = args["nuevoNivel"]
+    return niveles
+
 def gradoEntradas(gradoEntradas, valor):
     gradosEntradaValor = []
     for index in range(len(gradoEntradas)):
