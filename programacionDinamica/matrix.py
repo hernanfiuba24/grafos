@@ -24,6 +24,16 @@ class Matrix:
     def getValue(self,row,column):
         return self.matrix[row][column]
 
+    def __print__(self):
+        for i in range(self.rows):
+            print(self.matrix[i])
+
+    def __str__(self):
+        print = ""
+        for i in range(self.rows):
+            print += str(self.matrix[i]) + "\n"
+        return print
+
 class TestMatrix(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
