@@ -2,7 +2,7 @@
 
 
 
-# OPT[ni,j] = Minimun cost from 's' to 'ni' into less than j steps
+# OPT[ni,j] = Minimun cost from 's' to 'ni' into less than j steps (j = Max path's longitud)
 # Recurrency ecuacion
 # OPT[ni, j] = MIN { OPT[ni, j-1], 
 #                   all p into prev(i)/ MIN { OPT[p, j-1] + weight(p,j) }
@@ -22,13 +22,14 @@ MAX_WEIGHT = 10000
 
 def bestPath(V, OPT):
     N = OPT.getRows()-1
+    M = OPT.getColumns()-1
     path = []
-    edge = OPT.getValue(V.index(NODE_FINAL), N)[1]
+    edge = OPT.getValue(V.index(NODE_FINAL), M)[1]
     path.append(NODE_FINAL)
     while not edge == None:
         path.append(edge.origin())
-        edge = OPT.getValue(V.index(edge.origin()), N)[1]
-    return (path, OPT.getValue(V.index(NODE_FINAL), N)[0])
+        edge = OPT.getValue(V.index(edge.origin()), M)[1]
+    return (path, OPT.getValue(V.index(NODE_FINAL), M)[0])
 
 def buildGraph():
     V = ["s", "n1", "n2", "n3", "n4", "n5", "t"]
@@ -49,15 +50,17 @@ def main():
     V = G.vertices()
     E = G.edges()
     N = len(V)
+    M = len(E)
 
-    OPT = Matrix(N, N)
+    OPT = Matrix(N, M)
 
     # Initialize
     for i in range(N):
-        OPT.setValue(V.index(NODE_INITIAL), i, (0, None))
         OPT.setValue(i, 0, (MAX_WEIGHT, None))
+    for j in range(M):
+          OPT.setValue(V.index(NODE_INITIAL), j, (0, None))
 
-    for j in range(1, N):
+    for j in range(1, M):
         for ni in V:
             if not ni == NODE_INITIAL:
                 indexNi = V.index(ni)
