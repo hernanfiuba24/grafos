@@ -1,4 +1,15 @@
 
+from code import InteractiveConsole
+
+
+# For each Iteretion:
+# 1. Fetch the lowest 'x' Fromtera's cost
+# 2. Added 'x' to Alcanzados with its node that has the lower cost
+# 3. Added all adjacent to 'x' to Frontera with its minimun cost
+# 4. Update Frontera's cost foreach node that linked with adjacents. And update heapMinimum
+
+# The loop finish when Frontera's size is less than 0 or 't' has achieved
+
 from heapq import heappop, heappush
 from graph import Graph, Edge
 
@@ -30,22 +41,24 @@ def main():
     print(V)
     print(E)
 
-    Alcanzados ={NODE_ORIGIN : None}
-    Frontera = dict()
+    Alcanzados ={NODE_ORIGIN : None}    # Dictionary O(N)
+    Frontera = {}                   # Dictionary O(N)
     
+    # Initialize Frontera
     for adjacentToS in G.adjacentsTo(NODE_ORIGIN):
         # key: Node destine 'x'
         # value: (cost from 's' to destine, edge from 'origin' to 'destine' )
         Frontera[adjacentToS.destine()] = (adjacentToS.weight(), adjacentToS)
 
     heapMinimum = []
+    # initialize heapMinimum
     for key in Frontera.keys():
         heappush(heapMinimum, (Frontera[key][0], (Frontera[key])))
 
     end = False
     while not end:
         # minimun heap is updated by repeat values, neverless repeat keys are not procesing 
-        x = heappop(heapMinimum)
+        x = heappop(heapMinimum)    # O(1)
         destine =x[1][1].destine()
         if not destine in Alcanzados.keys():
             for adjacentToX in G.adjacentsTo(destine):
@@ -56,16 +69,16 @@ def main():
                         newCost =  x[0] + adjacentToX.weight()
                         if newCost < actualCost:
                             Frontera[adjacentToX.destine()] = (newCost, adjacentToX)
-                            heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))
+                            heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))  # O(logV)
                     else:
                         Frontera[adjacentToX.destine()] = (x[0] + adjacentToX.weight(), adjacentToX)
-                        heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))
+                        heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))      # O(logV)
             Alcanzados[destine] = Frontera[destine]
             del(Frontera[destine])
         end = len(Frontera) <=  0
         
     path = bestPath(Alcanzados)
-    print("The best path from [", NODE_ORIGIN, "] to [", NODE_END, "] is :", path[0], " and it cost : ", path[1])
+    print("The best path from [", NODE_ORIGIN, "] to [", NODE_END, "] is :", path[0], " and it costs : ", path[1])
 
 
 if __name__ == '__main__':
