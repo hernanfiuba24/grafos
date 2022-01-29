@@ -41,8 +41,8 @@ def main():
     print(V)
     print(E)
 
-    Alcanzados ={NODE_ORIGIN : None}    # Dictionary O(N)
-    Frontera = {}                   # Dictionary O(N)
+    Alcanzados ={NODE_ORIGIN : None}    # Dictionary O(V)
+    Frontera = {}                   # Dictionary O(V)
     
     # Initialize Frontera
     for adjacentToS in G.adjacentsTo(NODE_ORIGIN):
@@ -56,11 +56,11 @@ def main():
         heappush(heapMinimum, (Frontera[key][0], (Frontera[key])))
 
     end = False
-    while not end:
+    while not end:  # Se ejecuta V-1 veces
         # minimun heap is updated by repeat values, neverless repeat keys are not procesing 
         x = heappop(heapMinimum)    # O(1)
         destine =x[1][1].destine()
-        if not destine in Alcanzados.keys():
+        if not destine in Alcanzados.keys():    # El loop se ejecuta V-1 veces
             for adjacentToX in G.adjacentsTo(destine):
                 if not adjacentToX.destine() in Alcanzados.keys():
                     if (adjacentToX.destine() in Frontera):
@@ -69,18 +69,19 @@ def main():
                         newCost =  x[0] + adjacentToX.weight()
                         if newCost < actualCost:
                             Frontera[adjacentToX.destine()] = (newCost, adjacentToX)
-                            heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))  # O(logV)
+                            heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))  # O(logV)   
                     else:
                         Frontera[adjacentToX.destine()] = (x[0] + adjacentToX.weight(), adjacentToX)
                         heappush(heapMinimum, (Frontera[adjacentToX.destine()][0], (Frontera[adjacentToX.destine()])))      # O(logV)
             Alcanzados[destine] = Frontera[destine]
             del(Frontera[destine])
-        end = len(Frontera) <=  0
+        end = len(Frontera) <=  0   
         
     path = bestPath(Alcanzados)
     print("The best path from [", NODE_ORIGIN, "] to [", NODE_END, "] is :", path[0], " and it costs : ", path[1])
 
 
 if __name__ == '__main__':
+    # ComplexityTime: O ((V+E).logV)
     main()
     
