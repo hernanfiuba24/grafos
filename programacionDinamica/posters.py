@@ -9,13 +9,14 @@
 #                OPT[prev(i)] + w(i)    post i belong to secuence, so it's look for the poster that satisfy the Required.
 #               }
 
-W = 200
-Posters = [('c1', 0, 2), ('c2', 300, 10), ('c3', 850, 3), ('c4', 1000, 7),('c5', 2000, 4), ('c6', 2400, 1), ('c7', 2500, 10)]
+W = 2
+# Posters = [('c1', 0, 2), ('c2', 300, 10), ('c3', 850, 3), ('c4', 1000, 7),('c5', 2000, 4), ('c6', 2400, 1), ('c7', 2500, 10)]
+Posters = [('g1', 1, 4), ('g2', 2, 5), ('g3', 3, 8), ('g4', 4, 7),('g5', 5, 5), ('g6', 6, 4), ('g7', 7, 3),('g8', 8, 4), ('g9', 9, 6), ('g10', 10, 5)]
 N = len(Posters)
 
 def findRightPoster(index): 
     for i in range(index, -1, -1):
-        if Posters[index][1]-Posters[i][1] >= W:
+        if Posters[index][1]-Posters[i][1] > W:
             return i+1
     return 0
 
